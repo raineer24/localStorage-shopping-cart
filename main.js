@@ -11,10 +11,7 @@ const CART = {
         }else{
             //dummy test data
             CART.contents = [
-                {id:1, title:'Apple', qty:5, itemPrice: 0.85},
-                {id:2, title:'Cherry', qty:3, itemPrice: 0.35},
-                {id:3, title:'Banana', qty:8, itemPrice: 0.05}
-            ];
+                          ];
             // in production use an empty array here only
             CART.sync();
         }
@@ -121,7 +118,6 @@ const CART = {
 };
 
 let PRODUCTS = [];
-
 document.addEventListener('DOMContentLoaded', ()=>{
     //when the page is ready
     getProducts( showProducts, errorMessage );
@@ -129,7 +125,15 @@ document.addEventListener('DOMContentLoaded', ()=>{
     CART.init();
     //load the cart items
     showCart();
+    
+    
+    addToCartButtonsDOM.forEach(addToCartButtonDOM => {
+        console.log(addToCartButtonDOM);
+    })
+    console.log(CART.contents);
 });
+
+
 
 function showCart(){
     let cartSection = document.getElementById('cart');
@@ -140,6 +144,7 @@ function showCart(){
     s.forEach( item =>{
         let cartitem = document.createElement('div');
         cartitem.className = 'cart-item';
+        //console.log(cartitem);
         
         let title = document.createElement('h3');
         title.textContent = item.title;
@@ -153,6 +158,7 @@ function showCart(){
         let plus = document.createElement('span');
         plus.textContent = '+';
         plus.setAttribute('data-id', item.id)
+        plus.setAttribute('data-action', 'INCREASE__ITEM');
         controls.appendChild(plus);
         plus.addEventListener('click', incrementCart)
         
@@ -163,21 +169,32 @@ function showCart(){
         
         let minus = document.createElement('span');
         minus.textContent = '-';
-        minus.setAttribute('data-id', item.id)
+        minus.setAttribute('data-id', item.id);
+        minus.setAttribute('data-action', 'MINUS__ITEM');
         controls.appendChild(minus);
         minus.addEventListener('click', decrementCart)
         
         let price = document.createElement('div');
-        console.log(price);
+       
         price.className = 'price';
         let cost = new Intl.NumberFormat('en-CA', 
                         {style: 'currency', currency:'CAD'}).format(item.qty * item.itemPrice);
-                        console.log(cost);
+                        
         price.textContent = cost;
         cartitem.appendChild(price);
         
         cartSection.appendChild(cartitem);
-    })
+
+        countCartTotal();
+    });
+}
+
+function countCartTotal(){
+    let cartSection = document.querySelector('cart1');
+    /* cartSection.forEach(cartItems => {
+       console.log(carti)
+    }) */
+    
 }
 
 function incrementCart(ev){
@@ -187,9 +204,11 @@ function incrementCart(ev){
     let controls = ev.target.parentElement;
     let qty = controls.querySelector('span:nth-child(2)');
     let item = CART.find(id);
-    console.log(item);
+  
     if(item){
+        
         qty.textContent = item.qty;
+        console.log(item);
     }else{
         document.getElementById('cart').removeChild(controls.parentElement);
     }
@@ -205,21 +224,14 @@ function decrementCart(ev){
     let item = CART.find(id);
     if(item){
         qty.textContent = item.qty;
+        
     }else{
         document.getElementById('cart').removeChild(controls.parentElement);
     }
 
 }
 
-function xaddItem(ev){
-    
-    const cartItems = document.getElementsByClassName('cart-item')[0];
-    const priceElement = cartItems.getElementsByClassName('price')[0];
-    const quantityElement = cartItems.getElementsByClassName('quantity')[0];
-   const quantity = quantityElement[0];
-    console.log(quantity);
-    
-}
+
 
 function getProducts(success, failure){
     //request the list of products from the "server"
@@ -236,6 +248,7 @@ function getProducts(success, failure){
     });
     //.catch failure
     // more cleaner
+    
 }
 
 function showProducts( products ){
@@ -245,6 +258,7 @@ function showProducts( products ){
     let productSection = document.getElementById('products');
     productSection.innerHTML = "";
     products.forEach(product=>{
+        console.log(product);
         let card = document.createElement('div');
         card.className = 'card';
         //add the image to the card
@@ -273,11 +287,27 @@ function showProducts( products ){
         btn.className = 'btn';
         btn.textContent = 'Add Item';
         btn.setAttribute('data-id', product.id);
+        btn.setAttribute('data-action', 'ADD_TO_CART');
         btn.addEventListener('click', addItem);
         card.appendChild(btn);
         //add the card to the section
         productSection.appendChild(card);
+    });
+    //addToCartButtonsDOM = document.querySelectorAll('[data-action="ADD_TO_CART"]');
+    console.log(document.querySelectorAll('[data-action="ADD_TO_CART"]'))
+    const addToCartButtonsDOM = document.querySelectorAll('[data-action="ADD_TO_CART"]');
+    addToCartButtonsDOM.forEach(addToCartButtonDOM => {
+        console.log(addToCartButtonDOM)
     })
+
+
+    
+   
+    
+}
+function xaddItem(){
+    
+    
 }
 
 function addItem(ev){
