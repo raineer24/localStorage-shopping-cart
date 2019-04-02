@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     CART.init();
     //load the cart items
     showCart();
-   
+    countCartTotal();
 });
 
 
@@ -138,6 +138,7 @@ function showCart(){
     let s = CART.sort('qty');
     //let s = CART.sort('title');
     s.forEach( item =>{
+       
         let cartitem = document.createElement('div');
         cartitem.className = 'cart-item';
         //console.log(cartitem);
@@ -184,7 +185,7 @@ function showCart(){
     linePrice.className = 'linePrice';
     //linePrice.textContent = "wazzzaah";
     cartitem.appendChild(linePrice);
-   // console.log(item);
+    console.log(item);
         
         cartSection.appendChild(cartitem);
         
@@ -194,15 +195,17 @@ function showCart(){
     });
 }
 
-function countCartTotal(){
+function countCartTotal(item){
     // let linePrice = document.createElement('div');
+    let a = CART.contents;
+    console.log(a);
     // linePrice.className = 'linePrice';
     // linePrice.textContent = "wazzzaah";
     // cartitem.appendChild(linePrice);
     const cartItemsDOM = document.querySelectorAll('.cart-item');
    //console.log(cartItemsDOM);
     cartItemsDOM.forEach(cartItemDOM => {
-         
+         console.log(item);
         //console.log(cartItemDOM.querySelector('.linePrice').textContent);
         //console.log(cartItemDOM.querySelector('.controls'));
        let itemPrice = cartItemDOM.querySelector('.price').textContent;
