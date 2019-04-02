@@ -11,6 +11,9 @@ const CART = {
         }else{
             //dummy test data
             CART.contents = [
+                {id:1, title:'Apple', qty:5, itemPrice: 0.85},
+                {id:2, title:'Banana', qty:3, itemPrice: 0.35},
+                {id:3, title:'Cherry', qty:8, itemPrice: 0.05}
                           ];
             // in production use an empty array here only
             CART.sync();
@@ -58,11 +61,15 @@ const CART = {
             }
         }
     },
-    increase(id, qty=1){
+    increase(id, qty=1, title){
         //increase the quantity of an item in the cart
         CART.contents = CART.contents.map(item=>{
-            if(item.id === id)
+            
+            if(item.id === id) {
+                
                 item.qty = item.qty + qty;
+               console.log(item.title)
+            }
             return item;
         });
         //update localStorage
@@ -117,25 +124,35 @@ const CART = {
     }
 };
 
-let PRODUCTS = [];
-document.addEventListener('DOMContentLoaded', ()=>{
-    //when the page is ready
-    getProducts( showProducts, errorMessage );
-    //get the cart items from localStorage
-    CART.init();
-    //load the cart items
-    showCart();
-    countCartTotal();
-});
+if(document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', ready);
+    
+}
+
+function ready(){
+    
+     //when the page is ready
+     getProducts( showProducts, errorMessage );
+     //get the cart items from localStorage
+     CART.init();
+     //load the cart items
+     showCart();
+     //countCartTotal();
+
+}
+ let PRODUCTS = [];
+// document.addEventListener('DOMContentLoaded', () =>{
+   
+// });
 
 
 
 function showCart(){
     let cartSection = document.getElementById('cart');
-    cartSection.className = 'cart-ner'
-    cart.innerHTML = '';
+    //cartSection.className = 'cart-ner'
+    cartSection.innerHTML = '';
     //cartSection.innerHTML = '';
-    let s = CART.sort('qty');
+    let s = CART.sort('title');
     //let s = CART.sort('title');
     s.forEach( item =>{
        
@@ -181,34 +198,34 @@ function showCart(){
         price.textContent = cost;
         cartitem.appendChild(price);
 
-        let linePrice = document.createElement('div');
-    linePrice.className = 'linePrice';
-    //linePrice.textContent = "wazzzaah";
-    cartitem.appendChild(linePrice);
-    console.log(item);
+    let linePrice = document.createElement('div');
+   linePrice.className = 'linePrice';
+   linePrice.textContent = "wazzzaah";
+   cartitem.appendChild(linePrice);
+    //console.log(s);
         
         cartSection.appendChild(cartitem);
         
-        countCartTotal();
         
-       // console.log(document.querySelectorAll('.cart-ner'));
+    
     });
 }
 
 function countCartTotal(item){
     // let linePrice = document.createElement('div');
     let a = CART.contents;
-    console.log(a);
-    // linePrice.className = 'linePrice';
+   //console.log(a);
+    linePrice.className = 'linePrice';
     // linePrice.textContent = "wazzzaah";
     // cartitem.appendChild(linePrice);
     const cartItemsDOM = document.querySelectorAll('.cart-item');
+    console.log(cartItemsDOM);
    //console.log(cartItemsDOM);
     cartItemsDOM.forEach(cartItemDOM => {
-         console.log(item);
+         //console.log(item);
         //console.log(cartItemDOM.querySelector('.linePrice').textContent);
         //console.log(cartItemDOM.querySelector('.controls'));
-       let itemPrice = cartItemDOM.querySelector('.price').textContent;
+       //let itemPrice = cartItemDOM.querySelector('.price').textContent;
         //console.log(itemPrice)
     })
    
@@ -221,16 +238,22 @@ function incrementCart(ev){
     let controls = ev.target.parentElement;
     let qty = controls.querySelector('span:nth-child(2)');
     let item = CART.find(id);
-  
-    if(item){
-        
-        qty.textContent = item.qty;
-        console.log(item);
-    }else{
-        document.getElementById('cart').removeChild(controls.parentElement);
-    }
+    const cartItemsDOM = document.querySelectorAll('.cart-item');
+    cartItemsDOM.forEach(cartItemDOM => {
+        console.log(cartItemDOM);
+        if(item){
+            const price = cartItemDOM.querySelector('.price').textContent;
+            console.log(typeof price);
+            qty.textContent = item.qty;
+            
+            console.log(item);
+        }else{
+            document.getElementById('cart').removeChild(controls.parentElement);
+        }
+   })
     
-    console.log(item.itemPrice * item.qty)
+    
+   // console.log(item.itemPrice * item.qty)
 }
 
 function decrementCart(ev){
