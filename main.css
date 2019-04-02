@@ -66,6 +66,7 @@ main{
   font-weight: 700;
   font-size: 1.5rem;
 }
+
 .card h2{
   font-size: 1.2rem;
 }
@@ -90,6 +91,16 @@ main{
   top: 2rem;
   bottom: 1rem;
   right: 1rem;
+  width: 30%;
+  font-size: 0.8rem;
+  color: #AAA;
+  transform: rotate(30deg);
+}
+.cart-item .linePrice{
+  position: absolute;
+  top: 4rem;
+  bottom: 1rem;
+  right: -1rem;
   width: 30%;
   font-size: 0.8rem;
   color: #AAA;

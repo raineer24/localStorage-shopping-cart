@@ -171,13 +171,20 @@ function showCart(){
         minus.addEventListener('click', decrementCart)
         
         let price = document.createElement('div');
-       
+        
+
         price.className = 'price';
         let cost = new Intl.NumberFormat('en-CA', 
                         {style: 'currency', currency:'CAD'}).format(item.qty * item.itemPrice);
                         
         price.textContent = cost;
         cartitem.appendChild(price);
+
+        let linePrice = document.createElement('div');
+    linePrice.className = 'linePrice';
+    //linePrice.textContent = "wazzzaah";
+    cartitem.appendChild(linePrice);
+   // console.log(item);
         
         cartSection.appendChild(cartitem);
         
@@ -188,12 +195,18 @@ function showCart(){
 }
 
 function countCartTotal(){
-    
+    // let linePrice = document.createElement('div');
+    // linePrice.className = 'linePrice';
+    // linePrice.textContent = "wazzzaah";
+    // cartitem.appendChild(linePrice);
     const cartItemsDOM = document.querySelectorAll('.cart-item');
    //console.log(cartItemsDOM);
     cartItemsDOM.forEach(cartItemDOM => {
-        console.log(cartItemDOM.querySelector('.price'));
-        console.log(cartItemDOM.querySelector('.controls'));
+         
+        //console.log(cartItemDOM.querySelector('.linePrice').textContent);
+        //console.log(cartItemDOM.querySelector('.controls'));
+       let itemPrice = cartItemDOM.querySelector('.price').textContent;
+        //console.log(itemPrice)
     })
    
 }
@@ -213,8 +226,8 @@ function incrementCart(ev){
     }else{
         document.getElementById('cart').removeChild(controls.parentElement);
     }
-    xaddItem();
-    console.log(price.textContent)
+    
+    console.log(item.itemPrice * item.qty)
 }
 
 function decrementCart(ev){
