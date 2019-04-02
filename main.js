@@ -125,18 +125,14 @@ document.addEventListener('DOMContentLoaded', ()=>{
     CART.init();
     //load the cart items
     showCart();
-    
-    
-    addToCartButtonsDOM.forEach(addToCartButtonDOM => {
-        console.log(addToCartButtonDOM);
-    })
-    console.log(CART.contents);
+   
 });
 
 
 
 function showCart(){
     let cartSection = document.getElementById('cart');
+    cartSection.className = 'cart-ner'
     cart.innerHTML = '';
     //cartSection.innerHTML = '';
     let s = CART.sort('qty');
@@ -184,17 +180,22 @@ function showCart(){
         cartitem.appendChild(price);
         
         cartSection.appendChild(cartitem);
-
+        
         countCartTotal();
+        
+       // console.log(document.querySelectorAll('.cart-ner'));
     });
 }
 
 function countCartTotal(){
-    let cartSection = document.querySelector('cart1');
-    /* cartSection.forEach(cartItems => {
-       console.log(carti)
-    }) */
     
+    const cartItemsDOM = document.querySelectorAll('.cart-item');
+   //console.log(cartItemsDOM);
+    cartItemsDOM.forEach(cartItemDOM => {
+        console.log(cartItemDOM.querySelector('.price'));
+        console.log(cartItemDOM.querySelector('.controls'));
+    })
+   
 }
 
 function incrementCart(ev){
@@ -213,6 +214,7 @@ function incrementCart(ev){
         document.getElementById('cart').removeChild(controls.parentElement);
     }
     xaddItem();
+    console.log(price.textContent)
 }
 
 function decrementCart(ev){
@@ -258,7 +260,7 @@ function showProducts( products ){
     let productSection = document.getElementById('products');
     productSection.innerHTML = "";
     products.forEach(product=>{
-        console.log(product);
+        //console.log(product);
         let card = document.createElement('div');
         card.className = 'card';
         //add the image to the card
@@ -293,11 +295,11 @@ function showProducts( products ){
         //add the card to the section
         productSection.appendChild(card);
     });
-    //addToCartButtonsDOM = document.querySelectorAll('[data-action="ADD_TO_CART"]');
-    console.log(document.querySelectorAll('[data-action="ADD_TO_CART"]'))
+    
+    //console.log(document.querySelectorAll('[data-action="ADD_TO_CART"]'))
     const addToCartButtonsDOM = document.querySelectorAll('[data-action="ADD_TO_CART"]');
     addToCartButtonsDOM.forEach(addToCartButtonDOM => {
-        console.log(addToCartButtonDOM)
+       //console.log(addToCartButtonDOM.parentNode);
     })
 
 
