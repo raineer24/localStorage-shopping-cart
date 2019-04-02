@@ -68,7 +68,7 @@ const CART = {
             if(item.id === id) {
                 
                 item.qty = item.qty + qty;
-               console.log(item.title)
+               //console.log(item.title)
             }
             return item;
         });
@@ -211,25 +211,7 @@ function showCart(){
     });
 }
 
-function countCartTotal(item){
-    // let linePrice = document.createElement('div');
-    let a = CART.contents;
-   //console.log(a);
-    linePrice.className = 'linePrice';
-    // linePrice.textContent = "wazzzaah";
-    // cartitem.appendChild(linePrice);
-    const cartItemsDOM = document.querySelectorAll('.cart-item');
-    console.log(cartItemsDOM);
-   //console.log(cartItemsDOM);
-    cartItemsDOM.forEach(cartItemDOM => {
-         //console.log(item);
-        //console.log(cartItemDOM.querySelector('.linePrice').textContent);
-        //console.log(cartItemDOM.querySelector('.controls'));
-       //let itemPrice = cartItemDOM.querySelector('.price').textContent;
-        //console.log(itemPrice)
-    })
-   
-}
+
 
 function incrementCart(ev){
     ev.preventDefault();
@@ -238,15 +220,26 @@ function incrementCart(ev){
     let controls = ev.target.parentElement;
     let qty = controls.querySelector('span:nth-child(2)');
     let item = CART.find(id);
+    let linePrice = 0;
     const cartItemsDOM = document.querySelectorAll('.cart-item');
     cartItemsDOM.forEach(cartItemDOM => {
-        console.log(cartItemDOM);
+        //console.log(cartItemDOM);
         if(item){
-            const price = cartItemDOM.querySelector('.price').textContent;
-            console.log(typeof price);
-            qty.textContent = item.qty;
+        //     let price = cartItemDOM.querySelector('.price').textContent;
+        //     let linePriceElement = cartItemDOM.querySelector('.linePrice');
+        //     //console.log(linePrice);
+        //     linePrice = parseFloat(linePriceElement);
+        //     qty.textContent = item.qty;
+        //     //console.log(item.itemPrice);
+        //     //console.log(item.qty * item.itemPrice)
+        //     linePrice = item.qty * item.itemPrice;
+        //    // price.textContent = linePrice;
+        //    console.log( linePrice);
+        //     linePriceElement.textContent = linePrice
+        //     //cartItemsDOM.appendChild(linePrice);
+        //     //console.log(document.querySelector('linePrice').textContent);
             
-            console.log(item);
+    
         }else{
             document.getElementById('cart').removeChild(controls.parentElement);
         }
