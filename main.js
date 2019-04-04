@@ -208,18 +208,24 @@ function showCart() {
         //console.log(price)
         //    console.log(price.textContent);
         cartitem.appendChild(price);
-        //console.log(itemPrice);
-        let linePrice = document.createElement('div');
-        linePrice.className = 'linePrice';
-        //linePrice.textContent = "wazzzaah";
-        cartitem.appendChild(linePrice);
-        //console.log(s);
+        
+
+        let btn = document.createElement('button');
+        btn.textContent = 'REMOVE'
+        btn.addEventListener('click', removeItem);
+        cartitem.appendChild(btn);
 
         cartSection.appendChild(cartitem);
+
+        
 
 
 
     });
+}
+
+function removeItem() {
+    console.log('remove btn');
 }
 
 
