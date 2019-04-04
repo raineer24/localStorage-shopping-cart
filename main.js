@@ -211,7 +211,7 @@ function showCart() {
         //console.log(itemPrice);
         let linePrice = document.createElement('div');
         linePrice.className = 'linePrice';
-        linePrice.textContent = "wazzzaah";
+        //linePrice.textContent = "wazzzaah";
         cartitem.appendChild(linePrice);
         //console.log(s);
 
@@ -257,6 +257,9 @@ function decrementCart(ev) {
     let controls = ev.target.parentElement;
     let qty = controls.querySelector('span:nth-child(2)');
     let item = CART.find(id);
+    let cartItem = ev.target.parentElement.parentElement;
+    let linePrice = item.itemPrice * item.qty;
+    cartItem.querySelector('.price').innerHTML = `$${linePrice.toFixed(2)}`;
     if (item) {
         qty.textContent = item.qty;
 
@@ -334,10 +337,6 @@ function showProducts(products) {
     addToCartButtonsDOM.forEach(addToCartButtonDOM => {
         //console.log(addToCartButtonDOM.parentNode);
     })
-
-
-
-
 
 }
 
