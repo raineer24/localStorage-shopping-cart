@@ -11,9 +11,9 @@ const CART = {
         }else{
             //dummy test data
             CART.contents = [
-                {id:1, title:'Apple', qty:5, itemPrice: 0.85},
-                {id:2, title:'Banana', qty:3, itemPrice: 0.35},
-                {id:3, title:'Cherry', qty:8, itemPrice: 0.05}
+                // {id:1, title:'Apple', qty:5, itemPrice: 0.85},
+                // {id:2, title:'Banana', qty:3, itemPrice: 0.35},
+                // {id:3, title:'Cherry', qty:8, itemPrice: 0.05}
                           ];
             // in production use an empty array here only
             CART.sync();
@@ -61,14 +61,16 @@ const CART = {
             }
         }
     },
-    increase(id, qty=1, title){
+    increase(id, qty=1, itemPrice){
         //increase the quantity of an item in the cart
         CART.contents = CART.contents.map(item=>{
+            //console.log(item);
             
             if(item.id === id) {
-                
+                //linePrice = item.qty * item.price
                 item.qty = item.qty + qty;
-               //console.log(item.title)
+             itemPrice = item.itemPrice * item.qty;
+            // console.log('item price: ' + itemPrice +  ' item name: ' + item.title)
             }
             return item;
         });
@@ -138,7 +140,7 @@ function ready(){
      //load the cart items
      showCart();
      //countCartTotal();
-
+   
 }
  let PRODUCTS = [];
 // document.addEventListener('DOMContentLoaded', () =>{
@@ -148,14 +150,15 @@ function ready(){
 
 
 function showCart(){
+    
     let cartSection = document.getElementById('cart');
-    //cartSection.className = 'cart-ner'
+   // cartSection.className = 'cart-ner'
     cartSection.innerHTML = '';
     //cartSection.innerHTML = '';
     let s = CART.sort('title');
     //let s = CART.sort('title');
     s.forEach( item =>{
-       
+   //    console.log(item)
         let cartitem = document.createElement('div');
         cartitem.className = 'cart-item';
         //console.log(cartitem);
@@ -192,15 +195,21 @@ function showCart(){
         
 
         price.className = 'price';
+       // console.log(typeof price.textContent);
+        price.textContent = "wazzzaah";
+        //console.log(price.textContent);
         let cost = new Intl.NumberFormat('en-CA', 
                         {style: 'currency', currency:'CAD'}).format(item.qty * item.itemPrice);
                         
         price.textContent = cost;
+       // console.log(price.textContent);
+        //console.log(price)
+    //    console.log(price.textContent);
         cartitem.appendChild(price);
-
-    let linePrice = document.createElement('div');
-   linePrice.className = 'linePrice';
-   linePrice.textContent = "wazzzaah";
+            //console.log(itemPrice);
+  let linePrice = document.createElement('div');
+    linePrice.className = 'linePrice';
+ linePrice.textContent = "wazzzaah";
    cartitem.appendChild(linePrice);
     //console.log(s);
         
@@ -215,36 +224,112 @@ function showCart(){
 
 function incrementCart(ev){
     ev.preventDefault();
+    //console.log(ev.target);
+    let cartSection = document.getElementById('cart');
+    let cartItem = cartSection.getElementsByClassName('cart-item');
     let id = parseInt(ev.target.getAttribute('data-id'));
     CART.increase(id, 1);
     let controls = ev.target.parentElement;
     let qty = controls.querySelector('span:nth-child(2)');
+ 
     let item = CART.find(id);
-    let linePrice = 0;
-    const cartItemsDOM = document.querySelectorAll('.cart-item');
-    cartItemsDOM.forEach(cartItemDOM => {
-        //console.log(cartItemDOM);
-        if(item){
-        //     let price = cartItemDOM.querySelector('.price').textContent;
-        //     let linePriceElement = cartItemDOM.querySelector('.linePrice');
-        //     //console.log(linePrice);
-        //     linePrice = parseFloat(linePriceElement);
-        //     qty.textContent = item.qty;
-        //     //console.log(item.itemPrice);
-        //     //console.log(item.qty * item.itemPrice)
-        //     linePrice = item.qty * item.itemPrice;
-        //    // price.textContent = linePrice;
-        //    console.log( linePrice);
-        //     linePriceElement.textContent = linePrice
-        //     //cartItemsDOM.appendChild(linePrice);
-        //     //console.log(document.querySelector('linePrice').textContent);
+   // console.log(document.querySelector('.linePrice').textContent = qty);
+   
+//     let linePriceElement = document.querySelector('.linePrice').textContent;
+//    let linePrice = item.itemPrice * item.qty;
+//    //console.log(linePrice)
+//     console.log(linePriceElement)
+//     linePriceElement = linePrice;
+
+    let linePriceElement = cartSection.getElementsByClassName('linePrice');
+    // let linePrice = item.itemPrice * item.qty;
+    let linePriceCost  = new Intl.NumberFormat('en-CA', 
+                        {style: 'currency', currency:'CAD'}).format(item.qty * item.itemPrice);
+    linePriceElement.textContent = linePriceCost;
+    console.log(linePriceElement);
+
+    //console.log(linePriceElement);
+  
+ //  let cartItem = document.getElementsByClassName('cart-item');
+   // console.log(cartItem);
+  cartItem.appendChild(linePriceElement);
+   cartSection.appendChild(cartItem);
+   // console.log(cartItem)
+    //console.log(document.getElementsByClassName('quantity')[0]);
+   // console.log(document.querySelector('.quantity')[0]);
+//     const cartItemContainer = document.getElementsByClassName('cart1')[0];
+//     const cartItems = cartItemContainer.getElementsByClassName('cart-item');
+ //console.log(item.title)
+    // if(item.id === id) {
+    //     for (let i = 0; i < cartItems.length; i++) {
+    //         const cartItem = cartItems[i];
+    //         console.log(cartItem.getElementsByClassName('quantity')[0]);
             
+    //     }
+       
+    // }
+   // let linePrice = document.querySelector('linePrice');
+  //console.log(document.getElementsByClassName('linePrice'));
+    //let linePrice = 0;
+    //const cartDOM = document.querySelector('.cart-item');
+    //const cartItemsDOM = cartDOM.querySelectorAll('.cart-item');
+    // cartItemsDOM.forEach((cartItemDOM) => {
+    //     console.log(cartDOM);
+    // });
+
+    //console.log(cartItemsDOM);
+
+    // let cart = CART.contents;
+    //  cart.forEach(cartItem => {
+    //      console.log(cartItem)
+    //  })
+    //console.log(cartItems);
+    // console.log(item.title);
+    // console.log(id);
+    // console.log(item);
+    // CART.contents = CART.contents.map(item=>{
+        // if(item.id === id) {
+        //     console.log(item.title)
+           
+        // }
+         
     
-        }else{
-            document.getElementById('cart').removeChild(controls.parentElement);
-        }
-   })
     
+    // let cart = CART.contents;
+
+    // ;
+    // cart = cart.filter(item => {
+    //     console.log(item.title)
+    // })
+    
+
+
+   //console.log(x.getElementsByClassName('title')[0])
+    
+   if(item){
+    
+    // console.log(item.id);
+    // console.log(id);
+    //console.log(linePrice.textContent)
+    //console.log(item);
+    //let price = cartItemDOM.querySelector('.price').textContent;
+  // let linePriceElement = cartItemDOM.querySelector('.linePrice');
+   // console.log(linePriceElement);
+   //linePrice = parseFloat(linePriceElement);
+    qty.textContent = item.qty;
+    //console.log(item.itemPrice);
+    //console.log(item.qty * item.itemPrice)
+   // linePrice = item.qty * item.itemPrice;
+   // price.textContent = linePrice;
+ //  console.log( linePrice);
+  // linePriceElement.textContent = linePrice;
+    //cartItemsDOM.appendChild(linePrice);
+    
+    
+
+}else{
+    document.getElementById('cart').removeChild(controls.parentElement);
+}
     
    // console.log(item.itemPrice * item.qty)
 }
@@ -339,11 +424,6 @@ function showProducts( products ){
    
     
 }
-function xaddItem(){
-    
-    
-}
-
 function addItem(ev){
     ev.preventDefault();
     let id = parseInt(ev.target.getAttribute('data-id'));
