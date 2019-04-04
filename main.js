@@ -226,7 +226,7 @@ function incrementCart(ev){
     ev.preventDefault();
     //console.log(ev.target);
     let cartSection = document.getElementById('cart');
-    let cartItem = cartSection.getElementsByClassName('cart-item');
+    
     let id = parseInt(ev.target.getAttribute('data-id'));
     CART.increase(id, 1);
     let controls = ev.target.parentElement;
@@ -241,19 +241,30 @@ function incrementCart(ev){
 //     console.log(linePriceElement)
 //     linePriceElement = linePrice;
 
-    let linePriceElement = cartSection.getElementsByClassName('linePrice');
-    // let linePrice = item.itemPrice * item.qty;
-    let linePriceCost  = new Intl.NumberFormat('en-CA', 
-                        {style: 'currency', currency:'CAD'}).format(item.qty * item.itemPrice);
-    linePriceElement.textContent = linePriceCost;
-    console.log(linePriceElement);
+// start
+      //  cartItem = document.querySelectorAll('.cart-item');
+
+       let cartItem = ev.target.parentElement.parentElement;
+       let linePrice = item.itemPrice * item.qty;
+   cartItem.querySelector('.price').innerHTML = `$${linePrice.toFixed(2)}`;
+
+
+// end
+
+   // let linePriceElement = cartSection.getElementsByClassName('linePrice');
+ 
+    //console.log(cartItem.querySelector('.price').innerHTML = linePrice);
+//    // let linePriceCost  = new Intl.NumberFormat('en-CA', 
+//                         {style: 'currency', currency:'CAD'}).format(item.qty * item.itemPrice);
+   // linePriceElement.textContent = linePriceCost;
+   // console.log(linePriceElement);
 
     //console.log(linePriceElement);
   
  //  let cartItem = document.getElementsByClassName('cart-item');
    // console.log(cartItem);
-  cartItem.appendChild(linePriceElement);
-   cartSection.appendChild(cartItem);
+  //cartItem.appendChild(linePriceElement);
+   //cartSection.appendChild(cartItem);
    // console.log(cartItem)
     //console.log(document.getElementsByClassName('quantity')[0]);
    // console.log(document.querySelector('.quantity')[0]);
