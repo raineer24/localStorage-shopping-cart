@@ -211,7 +211,8 @@ function showCart() {
         
 
         let btn = document.createElement('button');
-        btn.textContent = 'REMOVE'
+        btn.textContent = 'REMOVE';
+        btn.setAttribute('data-id', item.id);
         btn.addEventListener('click', removeItem);
         cartitem.appendChild(btn);
 
@@ -224,8 +225,14 @@ function showCart() {
     });
 }
 
-function removeItem() {
-    console.log('remove btn');
+function removeItem(ev) {
+    console.log(ev.target);
+    let cartItem = ev.target.parentElement;
+    cartItem.remove();
+    console.log(cartItem)
+    let id = parseInt(ev.target.getAttribute('data-id'));
+    CART.remove(id);
+    
 }
 
 
