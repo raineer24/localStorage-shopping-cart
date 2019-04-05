@@ -208,18 +208,31 @@ function showCart() {
         //console.log(price)
         //    console.log(price.textContent);
         cartitem.appendChild(price);
-        //console.log(itemPrice);
-        let linePrice = document.createElement('div');
-        linePrice.className = 'linePrice';
-        //linePrice.textContent = "wazzzaah";
-        cartitem.appendChild(linePrice);
-        //console.log(s);
+        
+
+        let btn = document.createElement('button');
+        btn.textContent = 'REMOVE';
+        btn.setAttribute('data-id', item.id);
+        btn.addEventListener('click', removeItem);
+        cartitem.appendChild(btn);
 
         cartSection.appendChild(cartitem);
+
+        
 
 
 
     });
+}
+
+function removeItem(ev) {
+    console.log(ev.target);
+    let cartItem = ev.target.parentElement;
+    cartItem.remove();
+    console.log(cartItem)
+    let id = parseInt(ev.target.getAttribute('data-id'));
+    CART.remove(id);
+    
 }
 
 
